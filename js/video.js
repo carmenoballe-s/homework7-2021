@@ -8,8 +8,10 @@ window.addEventListener("load", function() {
 document.querySelector("#play").addEventListener("click", function() {
 	console.log("Play Video");
 	video.play();
-	document.getElementById("volume").innerHTML = video.volume * 100 + '%';
-});
+		if (video.play) {
+				var vol = document.querySelector("#slider").value;
+				document.getElementById("volume").innerHTML = vol+"%";
+}});
 
 document.querySelector("#pause").addEventListener("click", function() {
 	video.pause();
@@ -46,13 +48,14 @@ document.querySelector("#mute").addEventListener("click", function() {
 		
 });
 
-document.querySelector("#slider").addEventListener("click", function() {
-	console.log("Change volume");
-	console.log(this.value);
-	video.volume = this.value/100; 
-	document.querySelector("#volume").innerHTML = video.volume*100+"%"
-		
-});
+var slider = document.getElementById("slider");
+var output = document.getElementById("volume");
+
+slider.oninput = function() {
+	output.innerHTML = this.value+"%";
+	video.volume = this.value/100;
+}
+
 
 document.querySelector("#vintage").addEventListener("click", function () {
 	document.querySelector("Video").className='oldSchool';
@@ -60,6 +63,6 @@ document.querySelector("#vintage").addEventListener("click", function () {
 });
 
 document.querySelector("#orig").addEventListener("click", function () {
-	document.querySelector("Video").className='oldSchool';
+	document.querySelector("Video").classList.remove("oldSchool");
 
 });
